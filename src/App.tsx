@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {FC, useState} from 'react';
 import './App.css';
+import Users from "./components/Users/Users";
+import {getPosts} from "./servises/api.service";
+import {IPost} from "./model/IPost";
+import Posts from "./components/Posts/Posts";
 
-function App() {
+
+const App:FC = () => {
+
+    const [posts, setPosts] = useState<IPost[]>([])
+
+  const lift = (id:number) =>{
+             getPosts(id).then(value=>setPosts(value))
+      }
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <hr/>
+
+              <Posts posts={posts}/>
+
+        <hr/>
+         <Users lift={lift} />
     </div>
   );
 }
